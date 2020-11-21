@@ -1,4 +1,4 @@
-﻿/* ------------------------------------------------------------------|
+/* ------------------------------------------------------------------|
 对链表进行插入排序。
 
 
@@ -28,10 +28,10 @@
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。|
 -------------------------------------------------------------------*/
 
-/*	双指针法
+/*	
 *
-*	执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户
-*	内存消耗：8.1 MB, 在所有 C++ 提交中击败了81.94%的用户
+*	执行用时：48 ms, 在所有 C++ 提交中击败了48.21%的用户
+*	内存消耗：9.7 MB, 在所有 C++ 提交中击败了36.80%的用户
 */
 
 #include <iostream>
@@ -44,6 +44,13 @@
 
 using namespace std;
 
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(NULL) {}
+
+};
+
 struct TreeNode {
     int val;
     TreeNode* left;
@@ -51,30 +58,24 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
-
 ListNode* insertionSortList(ListNode* head) {
     if (!head) {
         return nullptr;
     }
-    //开一个新头节点进行链接操作，不在原有的链表上修改
     ListNode* dummyHead = new ListNode(0);
-    //dummyHead->next = head;
-    ListNode* now = head;
+
     ListNode* pre = dummyHead;
+    ListNode* now = head;
 
     while (now) {
         while (pre->next && now->val > pre->next->val) {
             pre = pre->next;
         }
-        ListNode* next = now->next; 
+
+        ListNode* next = now->next;
         now->next = pre->next;
         pre->next = now;
-        //因为now前面的节点指向了now，想让前一个节点指向now的next就直接将now修改为next即可
+
         now = next;
         pre = dummyHead;
     }
@@ -86,10 +87,10 @@ int main() {
     ListNode* n1 = new ListNode(2);
     ListNode* n2 = new ListNode(1);
     ListNode* n3 = new ListNode(3);
+
     head->next = n1;
     n1->next = n2;
     n2->next = n3;
 
     ListNode* res = insertionSortList(head);
 }
-
